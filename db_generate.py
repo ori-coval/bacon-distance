@@ -1,13 +1,38 @@
 import pandas as pd
+import json
 
-URL = "https://datasets.imdbws.com/name.basics.tsv.gz"
-df = pd.read_csv(
-    URL,
+NAMES_URL = "https://datasets.imdbws.com/name.basics.tsv.gz"
+PRINCIPALS_URL = "https://datasets.imdbws.com/title.principals.tsv.gz"
+BASICS_URL = "https://datasets.imdbws.com/title.basics.tsv.gz"
+
+principals = pd.read_csv(
+    PRINCIPALS_URL,
     sep="\t",
     compression="gzip",
-    usecols=["nconst", "primaryName", "primaryProfession", "knownForTitles"],
+    usecols=["tconst", "nconst", "category"]
+)
+principals = principals[principals["category"].isin(["actor", "actress"])]
+
+names = pd.read_csv(
+    NAMES_URL,
+    sep="\t",
+    compression="gzip",
+    usecols=["nconst", "primaryName"]
 )
 
-df = df[df["primaryProfession"].str.contains("act", na=False)]
+basics = pd.read_csv(
+    BASICS_URL,
+    sep="\t",
+    compression="gzip",
+    usecols=["tconst", "primaryTitle", "titleType"]
+)
+basics = basics[basics["titleType"] == "movie"]
 
-print(df)
+cast = principals.merge(names, on="nconst", how="left")
+cast = cast.merge(basics, on="tconst", how="left")
+cast = cast.drop_duplicates(subset=["tconst", "nconst"])
+
+movie_actors = cast.groupby("primaryTitle")["primaryName"].apply(list).to_dict()
+
+with open("actors_db.json", "w", encoding="utf-8") as actors_db:
+    json.dump(movie_actors, actors_db, indent=2)
