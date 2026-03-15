@@ -1,40 +1,48 @@
 {
-  "Tokyo Noir": [
-    "Bengal",
-    "Ken'ichi End",
-    "Fumina Hara",
-    "Tru Minegishi",
-    "Ken Mitsuishi",
-    "Kenji Mizuhashi",
-    "Sh\u00f4ko Nakahara",
-    "Hideo Nakaizumi",
-    "Aimi Nakamura",
-    "Yichi Nukumizu"
-  ],
-  "Tokyo Novel": [
-    "Hiroko Akune",
-    "Sh\u00fbji Kashiwabara",
-    "Machiko Kochi",
-    "Tomoe Oshii",
-    "Tomoya Sato",
-    "Tatsuhiko Takimoto",
-    "Fumiko Teshima",
-    "Mizuho Teshima",
-    "Tsugumi",
-    "Naoto Yamakawa",
-    "Luna Fujimoto",
-    "Kosei Ono",
-    "Luca Costa",
-    "Daikan Morishima",
-    "Kengo Araki"
-  ],
-  "Tokyo Oasis": [
-    "Satomi Kobayashi",
-    "Ry Kase",
-    "Tomoyo Harada",
-    "Haru Kuroki",
-    "Mikako Ichikawa",
-    "Ken Mitsuishi",
-    "Masako Motai"
-  ]
+  "actor_to_movies": {
+    "actor1": ["movie1", "movie2"],
+    "actor2": ["movie1"],
+    "actor3": ["movie1", "movie3"],
+    "actor4": ["movie2"],
+    "actor5": ["movie2", "movie4"],
+    "actor6": ["movie2"],
+    "actor7": ["movie3"],
+    "actor8": ["movie3", "movie4"],
+    "actor9": ["movie3"],
+    "actor10": ["movie4"],
+    "actor11": ["movie4"],
+    "actor12": ["movie1"],
+    "actor13": ["movie2"],
+    "actor14": ["movie3"],
+    "actor15": ["movie4"]
+  },
+  "movie_to_actors": {
+    "movie1": ["actor1", "actor2", "actor3", "actor12"],
+    "movie2": ["actor1", "actor4", "actor5", "actor6", "actor13"],
+    "movie3": ["actor3", "actor7", "actor8", "actor9", "actor14"],
+    "movie4": ["actor5", "actor8", "actor10", "actor11", "actor15"]
+  },
+  "actors": {
+    "actor1": "Actor 1",
+    "actor2": "Actor 2",
+    "actor3": "Actor 3",
+    "actor4": "Actor 4",
+    "actor5": "Actor 5",
+    "actor6": "Actor 6",
+    "actor7": "Actor 7",
+    "actor8": "Actor 8",
+    "actor9": "Actor 9",
+    "actor10": "Actor 10",
+    "actor11": "Actor 11",
+    "actor12": "Actor 12",
+    "actor13": "Actor 13",
+    "actor14": "Actor 14",
+    "actor15": "Actor 15"
+  },
+  "movies": {
+    "movie1": "Movie 1",
+    "movie2": "Movie 2",
+    "movie3": "Movie 3",
+    "movie4": "Movie 4"
+  }
 }
