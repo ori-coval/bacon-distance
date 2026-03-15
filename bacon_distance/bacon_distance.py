@@ -1,6 +1,6 @@
 from collections import deque
 import json
-from typing import Dict, List, Optional, Tuple, TypedDict
+from typing import Dict, List, Optional, TypedDict
 
 
 class ACTORS_DB_TYPE(TypedDict):
@@ -11,6 +11,7 @@ class ACTORS_DB_TYPE(TypedDict):
 
 
 def main():
+    """method to get actor names from the user and print the distance of the actor to kevin bacon"""
     actors_db: ACTORS_DB_TYPE = load_db("actors_db1.json")
     kevin_id = get_actor_id(actors_db, "Kevin Bacon")
     assert kevin_id
@@ -24,12 +25,14 @@ def main():
         print(actors_distance(actors_db, kevin_id, actor_id))
 
 
-def load_db(file_path: str):
+def load_db(file_path: str) -> ACTORS_DB_TYPE:
+    """loads the db from the given file"""
     with open(file_path) as actors_db_file:
         return json.load(actors_db_file)
 
 
 def get_actor_id(actors_db: ACTORS_DB_TYPE, name: str) -> Optional[str]:
+    """get the id of an actor from his name"""
     for key, value in actors_db["actors"].items():
         if value == name:
             return key
@@ -37,6 +40,7 @@ def get_actor_id(actors_db: ACTORS_DB_TYPE, name: str) -> Optional[str]:
 
 
 def actors_distance(actors_db: ACTORS_DB_TYPE, source_id: str, target_id: str) -> int:
+    """get the distance between the two actors"""
     if source_id == target_id:
         return 0
 
