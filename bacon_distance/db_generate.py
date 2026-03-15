@@ -30,9 +30,20 @@ basics = basics[basics["titleType"] == "movie"]
 
 cast = principals.merge(names, on="nconst", how="left")
 cast = cast.merge(basics, on="tconst", how="left")
-cast = cast.drop_duplicates(subset=["tconst", "nconst"])
+cast = cast[["tconst", "nconst", "primaryTitle", "primaryName"]]
 
-movie_actors = cast.groupby("primaryTitle")["primaryName"].apply(list).to_dict()
+actor_to_movies = cast.groupby("nconst")["tconst"].apply(list).to_dict()
+movie_to_actors = cast.groupby("tconst")["nconst"].apply(list).to_dict()
 
+actor_names = names.set_index("nconst")["primaryName"].to_dict()
+movie_names = basics.set_index("tconst")["primaryTitle"].to_dict()
+
+dataset = {
+    "actor_to_movies": actor_to_movies,
+    "movie_to_actors": movie_to_actors,
+    "actors": actor_names,
+    "movies": movie_names
+}
+    
 with open("actors_db.json", "w", encoding="utf-8") as actors_db:
-    json.dump(movie_actors, actors_db, indent=2)
+    json.dump(dataset, actors_db, indent=2)
