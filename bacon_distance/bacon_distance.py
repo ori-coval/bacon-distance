@@ -12,7 +12,7 @@ class ACTORS_DB_TYPE(TypedDict):
 
 def main():
     """method to get actor names from the user and print the distance of the actor to kevin bacon"""
-    actors_db: ACTORS_DB_TYPE = load_db("actors_db1.json")
+    actors_db: ACTORS_DB_TYPE = load_db("actors_db.json")
     kevin_id = get_actor_id(actors_db, "Kevin Bacon")
     assert kevin_id
 
