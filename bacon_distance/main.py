@@ -1,7 +1,6 @@
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm.session import Session
-
 from bacon_distance.bacon_distance import actors_distance, get_actor_id
 from bacon_distance.database import get_db
 
@@ -12,12 +11,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-@app.get("/{actor_name}")
-def get_id(actor_name: str, actors_db: Session = Depends(get_db)):
-    """return the bacon distance to the given actor"""
-    return {"id": get_actor_id(actors_db, actor_name)}
 
 
 @app.get("/bacon-distance/{actor_name}")

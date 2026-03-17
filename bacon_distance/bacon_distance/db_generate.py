@@ -3,10 +3,9 @@ from bacon_distance import database
 from bacon_distance.database import Actor, ActorMovie, Movie
 from sqlalchemy.orm import Session
 
-NAMES_URL = "name.basics.tsv.gz"
-PRINCIPALS_URL = "title.principals.tsv.gz"
-BASICS_URL = "title.basics.tsv.gz"
-
+NAMES_URL = "https://datasets.imdbws.com/name.basics.tsv.gz"
+PRINCIPALS_URL = "https://datasets.imdbws.com/title.principals.tsv.gz"
+BASICS_URL = "https://datasets.imdbws.com/title.basics.tsv.gz"
 session: Session = database.create_db()
 
 principals = pd.read_csv(
@@ -14,16 +13,13 @@ principals = pd.read_csv(
     sep="\t",
     compression="gzip",
     usecols=["tconst", "nconst", "category"],
-    nrows=10000000,
 )
 principals = principals[principals["category"].isin(["actor", "actress"])]
-
 names = pd.read_csv(
     NAMES_URL,
     sep="\t",
     compression="gzip",
     usecols=["nconst", "primaryName"],
-    nrows=10000000,
 )
 
 basics = pd.read_csv(
@@ -31,7 +27,6 @@ basics = pd.read_csv(
     sep="\t",
     compression="gzip",
     usecols=["tconst", "primaryTitle", "titleType"],
-    nrows=10000000,
 )
 basics = basics[basics["titleType"] == "movie"]
 
