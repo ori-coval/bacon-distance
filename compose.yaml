@@ -1,0 +1,18 @@
+services:
+  backend:
+    build:
+      context: ./bacon_distance/
+      target: backend
+    container_name: bacon-distance-backend
+    ports:
+      - 8000:80
+    restart: "always"
+
+  frontend:
+    build:
+      context: ./frontend/
+      target: frontend
+    container_name: bacon-distance-frontend
+    ports:
+      - 80:80
+    restart: "always"

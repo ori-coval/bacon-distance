@@ -34,7 +34,7 @@ def home():
             resultBox.innerText = "Loading..."
 
             try {
-                const response = await fetch("http://127.0.0.1:8000/bacon-distance/" + encodeURIComponent(name))
+                const response = await fetch("http://localhost:8000/bacon-distance/" + encodeURIComponent(name))
 
                 const data = await response.json()
                 resultBox.innerText = JSON.stringify(data, null, 2)
