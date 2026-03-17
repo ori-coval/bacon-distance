@@ -5,5 +5,12 @@ setup(
     version="0.1",
     author="Ori",
     packages=find_packages(),
-    install_requires=["pytest", "pandas", "fastapi[standard]"],
+    install_requires=[
+        "pytest",
+        "pandas",
+        "fastapi[standard]",
+        "sqlalchemy",
+        "pymysql",
+        "cryptography",
+    ],
 )
