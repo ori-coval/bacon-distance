@@ -33,16 +33,31 @@ def actors_distance(actors_db: Session, source_id: str, target_id: str) -> int:
         return 0
 
     visited = set([source_id])
-    queue = deque([(source_id, 0)])
+    current_level_actors = {source_id}
+    distance = 0
 
-    while queue:
-        actor, dist = queue.popleft()
+    while current_level_actors:
+        distance += 1
+        movies = (
+            actors_db.query(ActorMovie.movie_id)
+            .filter(ActorMovie.actor_id.in_(current_level_actors))
+            .distinct()
+            .all()
+        )
+        movie_ids = [movie.movie_id for movie in movies]
+        co_actors = (
+            actors_db.query(ActorMovie.actor_id)
+            .filter(ActorMovie.movie_id.in_(movie_ids))
+            .distinct()
+            .all()
+        )
+        next_level_actors = {co_actor.actor_id for co_actor in co_actors}
 
-        for movie in get_actor_movies(actors_db, actor):
-            for co_actor in get_movie_actors(actors_db, movie.movie_id):
-                if co_actor.actor_id == target_id:
-                    return dist + 1
-                if co_actor.actor_id not in visited:
-                    visited.add(co_actor.actor_id)
-                    queue.append((co_actor.actor_id, dist + 1))
+        if target_id in next_level_actors:
+            return distance
+        next_level_actors -= visited
+        visited |= next_level_actors
+
+        current_level_actors = next_level_actors
+
     return -1
