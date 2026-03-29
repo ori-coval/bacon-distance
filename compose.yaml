@@ -1,4 +1,17 @@
 services:
+  db:
+    image: mysql:8.0
+    container_name: bacon-distance-mysql
+    ports:
+      - 3306:3306
+    restart: always
+    environment:
+      MYSQL_DATABASE: bacon_distance
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_HOST: "%"
+    volumes:
+      - mysql-bacon-vol:/var/lib/mysql
+
   backend:
     build:
       context: ./bacon_distance/
@@ -16,3 +29,5 @@ services:
     ports:
       - 80:80
     restart: "always"
+volumes:
+  mysql-bacon-vol:
