@@ -29,5 +29,35 @@ services:
     ports:
       - 80:80
     restart: "always"
+
+  rabbitmq:
+    image: rabbitmq:latest
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    configs:
+      - source: rabbitmq-plugins
+        target: /etc/rabbitmq/enabled_plugins
+    volumes:
+      - rabbitmq-lib:/var/lib/rabbitmq/
+      - rabbitmq-log:/var/log/rabbitmq
+
+  new-movie-queue:
+    build:
+      context: ./db_updator_queue/
+      target: update_queue
+    container_name: bacon-distance-update-queue
+    restart: "always"
+
+configs:
+  rabbitmq-plugins:
+    content: "[rabbitmq_management]."
+
 volumes:
   mysql-bacon-vol:
+  rabbitmq-lib:
+    driver: local
+  rabbitmq-log:
+    driver: local
